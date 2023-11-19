@@ -1,0 +1,26 @@
+[
+  {
+    "id": "345672",
+    "service_type": "Regular",
+    "year": "2023",
+    "status": "New"
+  },
+  {
+    "id": "759372",
+    "service_type": "Regular",
+    "year": "2022",
+    "status": "New"
+  },
+  {
+    "id": "653742",
+    "service_type": "Regular",
+    "year": "2021",
+    "status": "Old"
+  },
+  {
+    "id": "563427",
+    "service_type": "Regular",
+    "year": "2020",
+    "status": "Old"
+  }
+]
