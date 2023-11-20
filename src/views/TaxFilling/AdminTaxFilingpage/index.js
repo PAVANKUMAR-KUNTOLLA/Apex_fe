@@ -84,56 +84,55 @@ const AdminTaxFillingPage = () => {
   return (
     <Page title={"Tax Filing"}>
       <Box>
-        <Container maxWidth="lg">
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {isLoadingSpin ? (
-              <Box
-                display="flex"
-                height="100%"
-                width="100%"
-                justifyContent="center"
-                alignItems="center"
-                sx={{
-                  position: "absolute",
-                  zIndex: "10",
-                  left: 0,
-                  top: "60%",
-                }}
-              >
-                <CircularProgress size={30} />
-              </Box>
-            ) : data ? (
-              <Box
-                sx={{
-                  backgroundColor: "rgba(255,255,255,1)",
-                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                  borderRadius: "4px",
-                  padding: "20px 10px",
-                  height: "800px", // Adjust the height as needed
-                  overflow: "auto", // Add overflow to enable scrolling
-                  maxHeight: "800px", // Add a maximum height to prevent content from overflowing
-                }}
-              >
-                <PerfectScrollbar>
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      marginLeft: "20px",
-                    }}
-                  >
-                    Tax-Filing For Year - {params.year}
-                  </Typography>
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          {isLoadingSpin ? (
+            <Box
+              display="flex"
+              height="100%"
+              width="100%"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                position: "absolute",
+                zIndex: "10",
+                left: 0,
+                top: "10%",
+              }}
+            >
+              <CircularProgress size={30} />
+            </Box>
+          ) : data ? (
+            <Box
+              sx={{
+                backgroundColor: "rgba(255,255,255,1)",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+                borderRadius: "4px",
+                padding: "20px 10px",
+                height: "800px", // Adjust the height as needed
+                overflow: "auto", // Add overflow to enable scrolling
+                maxHeight: "800px", // Add a maximum height to prevent content from overflowing
+              }}
+            >
+              <PerfectScrollbar>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    marginLeft: "20px",
+                  }}
+                >
+                  Tax-Filing For Year - {params.year}
+                </Typography>
 
-                  <TabsDesktop
-                    data={data}
-                    handleFetchData={handleFetchTaxFilingDetails}
-                    handleDownloadTemplate={handleDownloadTemplate}
-                  />
-                </PerfectScrollbar>
-              </Box>
-            ) : null}
-          </Box>
-        </Container>
+                <TabsDesktop
+                  data={data}
+                  handleFetchData={handleFetchTaxFilingDetails}
+                  handleDownloadTemplate={handleDownloadTemplate}
+                />
+              </PerfectScrollbar>
+            </Box>
+          ) : null}
+        </Box>
       </Box>
     </Page>
   );

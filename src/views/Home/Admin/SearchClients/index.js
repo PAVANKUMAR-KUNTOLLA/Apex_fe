@@ -33,12 +33,11 @@ import {
   privateApiGET,
   privateApiPOST,
 } from "../../../../components/PrivateRoute";
-import financialYears from "../../../../mock-adapter/financialYears.json";
 import SearchFiltersPage from "./SearchFilters";
 import UsersDisplayPage from "./UsersDisplay";
 import AppointmentUpdateConfirmationDialogBox from "./UpdateAppointment";
-import { DataArray } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import RefundPage from "./Refund";
 
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
@@ -112,6 +111,8 @@ const SearchClientsPage = () => {
   const [isDeleteLoadingSpin, setIsDeleteLoadingSpin] = useState(false);
   const [isUserDetailsLoadingSpin, setIsUserDetailsLoadingSpin] =
     useState(false);
+  const [isRefundDetailsLoadingSpin, setIsRefundDetailsLoadingSpin] =
+    useState(false);
   const [associateDetails, setAssociateDetails] = useState([]);
   const [showAlert, setShowAlert] = useState({
     isAlert: false,
@@ -119,6 +120,9 @@ const SearchClientsPage = () => {
     alertText: "",
     severity: "",
   });
+
+  const [isRefundPageOpen, setIsRefundPageOpen] = useState(false);
+  const [refundData, setRefundData] = useState([]);
 
   const [isAppointmentUpdateLoadingSpin, setIsAppointmentUpdateLoadingSpin] =
     useState(false);
@@ -132,6 +136,70 @@ const SearchClientsPage = () => {
     time: "",
     type: "",
   });
+
+  const [isAddRefundActive, setIsAddRefundActive] = useState(false);
+  const [addRefundData, setAddRefundData] = useState([
+    {
+      id: "",
+      name: "",
+      year: "",
+      service_type: "REGULAR",
+      refund_type: "FEDERAL REFUND",
+      standard_refund: 0,
+      standard_fee: 0,
+      itemized_refund: 0,
+      itemized_fee: 0,
+      discount: 0,
+      paid_advance: 0,
+      max_itemized_refund: 0,
+      max_itemized_fee: 0,
+    },
+  ]);
+
+  const handleAddRefundDataChange = (id, label, value) => {
+    console.log(id, label, value);
+    if (label === "year") {
+      {
+        console.log("year");
+
+        addRefundData.map((each, id) =>
+          setAddRefundData((prev) => [...prev, { ...prev[id], [label]: value }])
+        );
+      }
+    } else {
+      console.log(addRefundData[id]);
+      setAddRefundData((prev) =>
+        prev.map((item, index) => {
+          if (index === id) {
+            return { ...item, [label]: value };
+          }
+          return item;
+        })
+      );
+    }
+  };
+
+  const handleAddOneMoreRefundData = () => {
+    if (isAddRefundActive) {
+      setAddRefundData((prev) => [
+        ...prev,
+        {
+          ...prev[0],
+          refund_type: "FEDERAL REFUND",
+          standard_refund: 0,
+          standard_fee: 0,
+          itemized_refund: 0,
+          itemized_fee: 0,
+          discount: 0,
+          paid_advance: 0,
+          max_itemized_refund: 0,
+          max_itemized_fee: 0,
+        },
+      ]);
+    } else {
+      setIsAddRefundActive(true);
+    }
+  };
 
   const handleFiltersChange = (event) => {
     setFilters((prev) => ({
@@ -199,6 +267,74 @@ const SearchClientsPage = () => {
       });
   };
 
+  const handleFetchRefundDetails = (id) => {
+    let payload = { id: id };
+    setIsRefundDetailsLoadingSpin(true);
+    privateApiPOST(Api.refunds, payload)
+      .then((response) => {
+        const { status, data } = response;
+        if (status === 200) {
+          console.log("data", data);
+          setRefundData(data?.data);
+        }
+        setIsRefundDetailsLoadingSpin(false);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+        setShowAlert({
+          isAlert: true,
+          alertText: error.response.data?.message,
+          severity: "error",
+          alertTitle: "Error",
+        });
+        setIsRefundDetailsLoadingSpin(false);
+      });
+  };
+
+  const handleFetchAddRefund = () => {
+    setIsRefundDetailsLoadingSpin(true);
+    let payload = [...addRefundData];
+    privateApiPOST(Api.createRefund, payload)
+      .then((response) => {
+        const { status, data } = response;
+        if (status === 200) {
+          console.log("data", data);
+          setShowAlert({
+            isAlert: true,
+            alertText: data?.message,
+            severity: "success",
+          });
+          setAddRefundData((prev) => [
+            {
+              ...prev[0],
+              refund_type: "FEDERAL REFUND",
+              standard_refund: 0,
+              standard_fee: 0,
+              itemized_refund: 0,
+              itemized_fee: 0,
+              discount: 0,
+              paid_advance: 0,
+              max_itemized_refund: 0,
+              max_itemized_fee: 0,
+            },
+          ]);
+          setIsAddRefundActive(false);
+        }
+        setIsRefundDetailsLoadingSpin(false);
+        handleFetchRefundDetails(addRefundData[0].id);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+        setShowAlert({
+          isAlert: true,
+          alertText: error.response.data?.message,
+          severity: "error",
+          alertTitle: "Error",
+        });
+        setIsRefundDetailsLoadingSpin(false);
+      });
+  };
+
   const handleAppointmentDetailsDataChange = (event) => {
     setAppointmentDetailsData((prev) => ({
       ...prev,
@@ -219,10 +355,21 @@ const SearchClientsPage = () => {
         action: action,
       }));
       setIsAppointmentUpdateConfirmationDialogBoxOpen(true);
-    } else if (!action && data.filing.taxFilingId) {
+    } else if ((!action || action === "view") && data.filing.taxFilingId) {
       navigate(
         `/app/tax-filing/${data.filing.taxFilingYear}/${data.filing.taxFilingId}/0`
       );
+    } else if (action === "refund" && data.id) {
+      setIsRefundPageOpen(true);
+      setAddRefundData([
+        {
+          ...addRefundData[0],
+          id: data.id,
+          name: `${data.first_name} ${data.last_name}`,
+          year: "2023",
+        },
+      ]);
+      handleFetchRefundDetails(data.id);
     }
   };
 
@@ -251,6 +398,28 @@ const SearchClientsPage = () => {
       handleFetchUsers();
     }
   }, []);
+
+  useEffect(() => {
+    setIsAddRefundActive(false);
+    setIsRefundPageOpen(false);
+    setAddRefundData([
+      {
+        id: "",
+        name: "",
+        year: "",
+        service_type: "REGULAR",
+        refund_type: "FEDERAL REFUND",
+        standard_refund: 0,
+        standard_fee: 0,
+        itemized_refund: 0,
+        itemized_fee: 0,
+        discount: 0,
+        paid_advance: 0,
+        max_itemized_refund: 0,
+        max_itemized_fee: 0,
+      },
+    ]);
+  }, [users]);
 
   return (
     <Box>
@@ -292,6 +461,16 @@ const SearchClientsPage = () => {
         handleClose={handleAppointmentDetailsUpdateDialogBoxClose}
         handleConfirm={handleUpdateAppointmentDetails}
         isLoadingSpin={isAppointmentUpdateLoadingSpin}
+      />
+      <RefundPage
+        open={isRefundPageOpen}
+        data={refundData}
+        isAddRefundActive={isAddRefundActive}
+        handleAddRefund={handleAddOneMoreRefundData}
+        addRefundData={addRefundData}
+        handleAddRefundDataChange={handleAddRefundDataChange}
+        handleFetchAddRefund={handleFetchAddRefund}
+        isLoadingSpin={isRefundDetailsLoadingSpin}
       />
     </Box>
   );

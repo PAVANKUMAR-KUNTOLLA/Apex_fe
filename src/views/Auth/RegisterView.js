@@ -215,6 +215,7 @@ const RegisterView = () => {
                       password: "",
                       passwordConfirmation: "",
                       referralId: queryParams.get("referralId"),
+                      role: "CLIENT",
                     }}
                     validationSchema={Yup.object().shape({
                       firstName: Yup.string()

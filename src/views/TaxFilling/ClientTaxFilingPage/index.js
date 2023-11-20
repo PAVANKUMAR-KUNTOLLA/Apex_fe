@@ -106,8 +106,11 @@ const ClientTaxFillingPage = () => {
           sx={{
             padding: "10px 0",
             backgroundColor: "rgba(255,255,255,1)",
+            boxShadow:
+              "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
             display: "flex",
-            margin: "0 10px 10px",
+            margin: "10px 0",
+            borderRadius: "4px",
           }}
         >
           {[
@@ -152,7 +155,7 @@ const ClientTaxFillingPage = () => {
                 position: "absolute",
                 zIndex: "10",
                 left: 0,
-                top: "30%",
+                top: "10%",
               }}
             >
               <CircularProgress size={30} />
@@ -161,13 +164,13 @@ const ClientTaxFillingPage = () => {
             <Box
               sx={{
                 backgroundColor: "rgba(255,255,255,1)",
-                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
                 borderRadius: "4px",
                 padding: "20px 10px",
                 height: "1000px", // Adjust the height as needed
                 overflow: "auto", // Add overflow to enable scrolling
                 maxHeight: "1000px", // Add a maximum height to prevent content from overflowing
-                marginLeft: "20px",
               }}
             >
               <PerfectScrollbar>

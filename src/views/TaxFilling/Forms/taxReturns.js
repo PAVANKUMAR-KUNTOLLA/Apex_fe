@@ -36,6 +36,7 @@ import {
   privateApiPOST,
 } from "../../../components/PrivateRoute";
 import CustomAlert from "../../../components/CustomAlert";
+import { StyledTableCell } from "..";
 
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
@@ -70,7 +71,7 @@ export const customTextStyles = makeStyles((theme) => ({
     padding: "10px 40px 9px",
     marginBottom: "4px",
   },
-  mobileViewTableCellValue: {
+  mobileViewStyledTableCellValue: {
     color: "rgb(71, 71, 71)",
     fontSize: "14px",
     fontWeight: "400",
@@ -86,7 +87,7 @@ export const customTextStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  mobileViewTableCellHeader: {
+  mobileViewStyledTableCellHeader: {
     color: "rgb(245, 166, 35)",
     fontSize: "10px",
     fontWeight: "400",
@@ -281,7 +282,13 @@ const TaxReturns = () => {
     handleFetchMyTaxDocs();
   }, []);
   return (
-    <Box>
+    <Box
+      sx={{
+        padding: "20px 30px 5px",
+        border: { xs: "none", sm: "none" },
+        minHeight: { xs: "auto", sm: "400px" },
+      }}
+    >
       {showAlert.isAlert && (
         <CustomAlert
           open={showAlert.isAlert}
@@ -298,142 +305,245 @@ const TaxReturns = () => {
           }
         />
       )}
-      <Container>
-        {role === "ADMIN" ? (
-          <Box
+      {role === "ADMIN" ? (
+        <Box>
+          <Typography
             sx={{
-              padding: "20px 0 5px",
-              border: { xs: "none", sm: "1px solid #3A97BB" },
-              minHeight: { xs: "auto", sm: "400px" },
+              color: "rgba(71,71,71,1)",
+              fontSize: "24px",
+              fontWeight: 400,
+              lineHeight: "33px",
+              textAlign: "left",
+              marginBottom: "16px",
             }}
           >
-            <Typography variant="h4" sx={{ marginLeft: "10px" }}>
-              Attach Client Tax Returns:
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: "20px 0",
-              }}
-            >
-              <Typography sx={{ marginRight: "24px" }}>Upload File</Typography>
-              <Box sx={{ marginRight: "20px" }}>
-                <input
-                  required
-                  id="import-file-button"
-                  type="file"
-                  onChange={handleUploadClick}
-                  accept=".xlsx"
-                  style={{ opacity: 0, visibility: "hidden", width: "1px" }}
-                />
-                <label htmlFor="import-file-button">
-                  <Button
-                    startIcon={<CloudUploadIcon />}
-                    component="span"
-                    variant="contained"
-                  >
-                    Choose File
-                  </Button>
-                </label>
-                <Typography sx={{ marginTop: "8px", fontStyle: "italic" }}>
-                  {state.selectedFile.name}
-                </Typography>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: "20px 0",
-              }}
-            >
-              <Typography sx={{ marginRight: "24px" }}>Remarks</Typography>
-              <TextField
-                size="large"
-                name="remarks"
-                value={state.remarks}
-                onChange={(e) =>
-                  setState((prev) => ({ ...prev, remarks: e.target.value }))
-                }
+            Attach Client Tax Returns
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "20px 0",
+            }}
+          >
+            <Typography sx={{ marginRight: "24px" }}>Upload File</Typography>
+            <Box sx={{ marginRight: "20px" }}>
+              <input
+                required
+                id="import-file-button"
+                type="file"
+                onChange={handleUploadClick}
+                accept=".xlsx"
+                style={{ opacity: 0, visibility: "hidden", width: "1px" }}
               />
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                margin: "20px 0",
-              }}
-            >
-              <Button
-                onClick={handleUploadTaxDocs}
-                sx={{ marginBottom: "10px" }}
-              >
-                Upload Tax Returns
-              </Button>
+              <label htmlFor="import-file-button">
+                <Button
+                  startIcon={<CloudUploadIcon />}
+                  component="span"
+                  variant="contained"
+                >
+                  Choose File
+                </Button>
+              </label>
+              <Typography sx={{ marginTop: "8px", fontStyle: "italic" }}>
+                {state.selectedFile.name}
+              </Typography>
             </Box>
           </Box>
-        ) : null}
-        <Box
-          sx={{
-            padding: "20px 0 5px",
-            border: { xs: "none", sm: "1px solid #3A97BB" },
-            minHeight: { xs: "auto", sm: role === "ADMIN" ? "400px" : "800px" },
-          }}
-        >
-          <TableContainer sx={{ marginTop: "32px" }}>
-            <Typography variant="h4" sx={{ marginLeft: "10px" }}>
-              Tax Return Document List:
-            </Typography>
-            <Table
-              sx={{
-                borderCollapse: "collapse",
-                marginTop: "30px",
-              }}
-              aria-label="Place Order Series Table"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell className={customStyles.tableHeader}>ID</TableCell>
-                  <TableCell className={customStyles.tableHeader}>
-                    Document Name
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
-                    uploaded on
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
-                    Remarks
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {state.myTaxDocs.length > 0 &&
-                  state.myTaxDocs.map((row, index) => (
-                    <TableRow key={index}>
-                      <TableCell className={customStyles.tableData}>
-                        {row.id}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
-                        {row.file_name.replace(/^[^_]*_([^_]*_)/, "")}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
-                        {row.upload_time}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
-                        {row.remarks}
-                      </TableCell>
-                      <TableCell className={customStyles.buttons}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "20px 0",
+            }}
+          >
+            <Typography sx={{ marginRight: "24px" }}>Remarks</Typography>
+            <TextField
+              size="large"
+              name="remarks"
+              value={state.remarks}
+              onChange={(e) =>
+                setState((prev) => ({ ...prev, remarks: e.target.value }))
+              }
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "20px 0",
+            }}
+          >
+            <Button onClick={handleUploadTaxDocs} sx={{ marginBottom: "10px" }}>
+              Upload Tax Returns
+            </Button>
+          </Box>
+        </Box>
+      ) : null}
+      <Box
+        sx={{
+          minHeight: { xs: "auto", sm: role === "ADMIN" ? "400px" : "800px" },
+        }}
+      >
+        <TableContainer sx={{ marginTop: "32px" }}>
+          <Typography
+            sx={{
+              color: "rgba(71,71,71,1)",
+              fontSize: "24px",
+              fontWeight: 400,
+              lineHeight: "33px",
+              textAlign: "left",
+              marginBottom: "16px",
+            }}
+          >
+            Tax Return Document List
+          </Typography>
+          <Table
+            sx={{
+              borderCollapse: "collapse",
+              marginTop: "30px",
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  ID
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  Document Name
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  uploaded on
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  Remarks
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  Actions
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {state.myTaxDocs.length > 0 &&
+                state.myTaxDocs.map((row, index) => (
+                  <TableRow key={index}>
+                    <StyledTableCell className={customStyles.tableData}>
+                      {row.id}
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
+                      {row.file_name.replace(/^[^_]*_([^_]*_)/, "")}
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
+                      {row.upload_time}
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
+                      {row.remarks}
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.buttons}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Button
+                          disabled={isLoading}
+                          startIcon={<GetApp />}
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {
+                            handleDownloadFile(row.file_name);
+                          }}
+                        >
+                          Download{" "}
+                        </Button>
+                        <Button
+                          disabled={isLoading}
+                          startIcon={<DeleteIcon />}
+                          size="small"
+                          onClick={() => {
+                            handleDeleteFile(row.id, row.file_name);
+                          }}
+                          sx={{
+                            display: role === "ADMIN" ? "flex" : "none",
+                          }}
+                        >
+                          Delete{" "}
+                        </Button>
+                      </Box>
+                    </StyledTableCell>
+
+                    <StyledTableCell className={customStyles.mobileView}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginTop: "16px",
+                        }}
+                      >
+                        <Box sx={{ marginTop: "3px" }}>
+                          <Typography
+                            className={
+                              customStyles.mobileViewStyledTableCellHeader
+                            }
+                          >
+                            File Name
+                          </Typography>
+
+                          <Typography
+                            className={
+                              customStyles.mobileViewStyledTableCellValue
+                            }
+                          >
+                            {row.file_name.replace(/^[^_]*_([^_]*_)/, "")}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ marginTop: "3px" }}>
+                          <Typography
+                            className={
+                              customStyles.mobileViewStyledTableCellHeader
+                            }
+                          >
+                            Upload Time
+                          </Typography>
+
+                          <Typography
+                            className={
+                              customStyles.mobileViewStyledTableCellValue
+                            }
+                          >
+                            {row.upload_time}
+                          </Typography>
+                        </Box>
+
+                        <Box sx={{ marginTop: "3px" }}>
+                          <Typography
+                            className={
+                              customStyles.mobileViewStyledTableCellHeader
+                            }
+                          >
+                            Remarks
+                          </Typography>
+
+                          <Typography
+                            className={
+                              customStyles.mobileViewStyledTableCellValue
+                            }
+                          >
+                            {row.remarks}
+                          </Typography>
+                        </Box>
+
                         <Box
                           sx={{
                             display: "flex",
                             flexWrap: "wrap",
                             justifyContent: "space-between",
+                            marginTop: "16px",
                           }}
                         >
                           <Button
@@ -446,120 +556,43 @@ const TaxReturns = () => {
                             }}
                           >
                             Download{" "}
+                            {isLoading && (
+                              <CircularProgress sx={{ ml: 1 }} size={14} />
+                            )}
                           </Button>
                           <Button
                             disabled={isLoading}
                             startIcon={<DeleteIcon />}
                             size="small"
                             onClick={() => {
-                              handleDeleteFile(row.id, row.file_name);
+                              handleDeleteFile(row.file_name);
                             }}
                             sx={{
                               display: role === "ADMIN" ? "flex" : "none",
                             }}
                           >
                             Delete{" "}
+                            {isLoading && (
+                              <CircularProgress sx={{ ml: 1 }} size={14} />
+                            )}
                           </Button>
                         </Box>
-                      </TableCell>
-
-                      <TableCell className={customStyles.mobileView}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginTop: "16px",
-                          }}
-                        >
-                          <Box sx={{ marginTop: "3px" }}>
-                            <Typography
-                              className={customStyles.mobileViewTableCellHeader}
-                            >
-                              File Name
-                            </Typography>
-
-                            <Typography
-                              className={customStyles.mobileViewTableCellValue}
-                            >
-                              {row.file_name.replace(/^[^_]*_([^_]*_)/, "")}
-                            </Typography>
-                          </Box>
-                          <Box sx={{ marginTop: "3px" }}>
-                            <Typography
-                              className={customStyles.mobileViewTableCellHeader}
-                            >
-                              Upload Time
-                            </Typography>
-
-                            <Typography
-                              className={customStyles.mobileViewTableCellValue}
-                            >
-                              {row.upload_time}
-                            </Typography>
-                          </Box>
-
-                          <Box sx={{ marginTop: "3px" }}>
-                            <Typography
-                              className={customStyles.mobileViewTableCellHeader}
-                            >
-                              Remarks
-                            </Typography>
-
-                            <Typography
-                              className={customStyles.mobileViewTableCellValue}
-                            >
-                              {row.remarks}
-                            </Typography>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexWrap: "wrap",
-                              justifyContent: "space-between",
-                              marginTop: "16px",
-                            }}
-                          >
-                            <Button
-                              disabled={isLoading}
-                              startIcon={<GetApp />}
-                              size="small"
-                              variant="outlined"
-                              onClick={() => {
-                                handleDownloadFile(row.file_name);
-                              }}
-                            >
-                              Download{" "}
-                              {isLoading && (
-                                <CircularProgress sx={{ ml: 1 }} size={14} />
-                              )}
-                            </Button>
-                            <Button
-                              disabled={isLoading}
-                              startIcon={<DeleteIcon />}
-                              size="small"
-                              onClick={() => {
-                                handleDeleteFile(row.file_name);
-                              }}
-                              sx={{
-                                display: role === "ADMIN" ? "flex" : "none",
-                              }}
-                            >
-                              Delete{" "}
-                              {isLoading && (
-                                <CircularProgress sx={{ ml: 1 }} size={14} />
-                              )}
-                            </Button>
-                          </Box>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Container>
+                      </Box>
+                    </StyledTableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+          {state.myTaxDocs.length === 0 && (
+            <Typography
+              variant="h5"
+              sx={{ textAlign: "center", margin: "10px 0" }}
+            >
+              No Records Found
+            </Typography>
+          )}
+        </TableContainer>
+      </Box>
     </Box>
   );
 };

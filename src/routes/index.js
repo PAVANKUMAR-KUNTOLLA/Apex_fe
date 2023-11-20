@@ -33,6 +33,7 @@ const AppRoutes = () => {
         }
       >
         <Route path="home" element={<HomePage />} />
+        <Route path="home/:adminAction" element={<HomePage />} />
         <Route
           path="tax-filing/:year/:id/:action"
           element={<TaxFillingPage />}

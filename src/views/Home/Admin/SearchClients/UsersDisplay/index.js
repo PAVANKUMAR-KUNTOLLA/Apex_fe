@@ -147,7 +147,6 @@ const UsersDisplayPage = ({
                 sx={{
                   borderCollapse: "collapse",
                 }}
-                aria-label="Place Order Series Table"
               >
                 <TableHead>
                   <TableRow>
@@ -192,50 +191,24 @@ const UsersDisplayPage = ({
                           {row.filing.appointmentTime}
                         </TableCell>
                         <TableCell sx={{ display: "flex", flexWrap: "nowrap" }}>
-                          {/* <IconButton
-                            disabled={isDeleteLoadingSpin}
-                            size="small"
-                            onClick={() => {
-                              handleDeleteAssociate(row.id);
-                            }}
-                            className={customStyles.buttons}
-                          >
-                            <DeleteIcon />
-                          </IconButton> */}
-
-                          <select
-                            id="action"
-                            name="action"
-                            value={row.id in action ? action[row.id] : ""}
-                            onChange={(e) =>
-                              setAction((prev) => ({
-                                ...prev,
-                                [row.id]: e.target.value,
-                              }))
-                            }
-                            style={{ minHeight: "25px", padding: "5px" }}
-                          >
-                            <option value="view">View</option>
-                            <option value="delete">Delete</option>
-                            <option value="update">Update</option>
-                            <option value="refund">Refund</option>
-                          </select>
-                          <button
-                            onClick={(e) =>
-                              handleUpdateAppointmentDetails(
-                                row,
-                                action[row.id]
-                              )
-                            }
-                            style={{
-                              minHeight: "25px",
-                              padding: "2px",
-                              marginLeft: "5px",
-                              border: "1px solid black",
-                            }}
-                          >
-                            Submit
-                          </button>
+                          {["view", "update", "delete", "refund"].map(
+                            (each, id) => (
+                              <button
+                                key={id}
+                                onClick={(e) =>
+                                  handleUpdateAppointmentDetails(row, each)
+                                }
+                                style={{
+                                  minHeight: "25px",
+                                  padding: "2px",
+                                  marginLeft: "5px",
+                                  border: "1px solid black",
+                                }}
+                              >
+                                {each}
+                              </button>
+                            )
+                          )}
                         </TableCell>
                         <TableCell className={customStyles.mobileView}>
                           <Box>
@@ -313,6 +286,14 @@ const UsersDisplayPage = ({
                 </TableBody>
               </Table>
             </TableContainer>
+          )}
+          {data.length === 0 && !isUserDetailsLoadingSpin && (
+            <Typography
+              variant="h5"
+              sx={{ textAlign: "center", margin: "10px 0" }}
+            >
+              No Records Found
+            </Typography>
           )}
         </Box>
       </Box>

@@ -94,9 +94,20 @@ const ProfilePage = () => {
 
   return (
     <Page title="Profile">
-      <Container maxWidth="md" className={customStyles.mainBlock}>
+      <Box
+        sx={{
+          backgroundColor: "rgba(255,255,255,1)",
+          boxShadow:
+            "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+          borderRadius: "4px",
+          padding: "20px 10px",
+          height: "800px",
+          overflow: "auto",
+          maxHeight: "800px",
+        }}
+      >
         <Box className={customStyles.account}>
-          {state.first_name && (
+          {/* {state.first_name && (
             <Avatar
               {...stringAvatar(state.first_name + state.last_name)}
               sx={{
@@ -115,7 +126,7 @@ const ProfilePage = () => {
             sx={{ fontWeight: "700", marginTop: "10px", fontSize: "16px" }}
           >
             {state.first_name} {state.last_name}
-          </Typography>
+          </Typography> */}
 
           <Card sx={{ marginTop: "20px" }}>
             <CardHeader
@@ -210,7 +221,7 @@ const ProfilePage = () => {
             </CardContent>
           </Card>
         </Box>
-      </Container>
+      </Box>
     </Page>
   );
 };

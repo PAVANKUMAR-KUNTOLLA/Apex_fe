@@ -24,7 +24,10 @@ import {
   FormLabel,
   FormControlLabel,
   FormControl,
+  Chip,
+  styled,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import config from "../../../config";
 import { makeStyles } from "@mui/styles";
@@ -40,27 +43,27 @@ import {
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
-    fontWeight: "400",
-    lineHeight: "23px",
+    fontWeight: "700",
+    lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
   tableData: {
     fontSize: "16px",
-    fontWeight: "700",
-    lineHeight: "22px",
+    fontWeight: "400",
+    lineHeight: "23px",
     [theme.breakpoints.down("sm")]: {
       // marginBottom: "8px",
       display: "none",
     },
   },
   headerText: {
+    color: "rgba(71,71,71,1)",
     fontSize: "24px",
-    fontWeight: "600",
-    marginTop: "32px",
-    marginBottom: "16px",
-    color: "#2069DB",
+    fontWeight: 400,
+    lineHeight: "33px",
+    margin: "30px 0 20px",
   },
   confirmButton: {
     fontSize: "14px",
@@ -70,7 +73,7 @@ export const customTextStyles = makeStyles((theme) => ({
     padding: "10px 40px 9px",
     marginBottom: "4px",
   },
-  mobileViewTableCellValue: {
+  mobileViewStyledTableCellValue: {
     color: "rgb(71, 71, 71)",
     fontSize: "14px",
     fontWeight: "400",
@@ -86,11 +89,26 @@ export const customTextStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  mobileViewTableCellHeader: {
+  mobileViewStyledTableCellHeader: {
     color: "rgb(245, 166, 35)",
     fontSize: "10px",
     fontWeight: "400",
     lineHeight: "14px",
+  },
+}));
+
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  "&": {
+    backgroundColor: "#FFFFFF",
+    borderWidth: "1px 0",
+    borderStyle: "solid",
+    borderColor: "#E2EBFF",
+    "&:first-of-type": {
+      borderWidth: "1px",
+    },
+    "&:nth-last-of-type(2)": {
+      borderRightWidth: "1px",
+    },
   },
 }));
 
@@ -102,7 +120,6 @@ const ClientHomePage = () => {
   const [taxYearServices, setTaxYearServices] = useState([]);
   const [isMyServicesLoading, setIsMyServicesLoading] = useState(false);
   const [isTaxYearsLoading, setIsTaxYearsLoading] = useState(false);
-  const [currSelectedYear, setCurrSelectedYear] = useState("");
   const dispatch = useDispatch();
 
   const handleNavigate = (value) => {
@@ -110,13 +127,9 @@ const ClientHomePage = () => {
     navigate(path);
   };
 
-  const handleCurrYearTaxServiceChange = (event) => {
-    setCurrSelectedYear(event.target.value);
-  };
-
-  const handleAddTaxServiceChange = () => {
+  const handleAddTaxServiceChange = (year) => {
     setIsMyServicesLoading(true);
-    let payload = { new: true, year: currSelectedYear };
+    let payload = { new: true, year: year };
     privateApiPOST(Api.myServices, payload)
       .then((response) => {
         const { status, data } = response;
@@ -124,7 +137,6 @@ const ClientHomePage = () => {
           console.log("data", data);
           setMyServices(data?.data);
           setIsMyServicesLoading(false);
-          setCurrSelectedYear("");
         }
       })
       .catch((error) => {
@@ -174,7 +186,86 @@ const ClientHomePage = () => {
 
   return (
     <Box>
-      <Container maxWidth="lg">
+      <Box
+        sx={{
+          marginTop: "25px",
+        }}
+      >
+        <Typography className={customStyles.headerText}>
+          Tax Services
+        </Typography>
+        <Grid container>
+          {taxYearServices.length > 0 &&
+            taxYearServices.map((taxYear) => {
+              const isSelected = myServices.some(
+                (service) => service.year === taxYear.name
+              );
+
+              return (
+                <Grid item xs={3} key={taxYear.id} sx={{ margin: "0 15px" }}>
+                  <Box
+                    sx={{
+                      padding: "24px 16px 16px 24px",
+                      boxShadow: "0px 0px 4px rgba(0,0,0, 0.060315)",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      opacity: 1,
+                      backgroundColor: "rgba(255,255,255, 1)",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        justifyContent: "flex-end",
+                        marginTop: "8px",
+                        alignItems: "center",
+                      }}
+                    >
+                      {isSelected ? (
+                        <Chip
+                          label={"Selected"}
+                          size="small"
+                          color={"success"}
+                        />
+                      ) : (
+                        <Chip
+                          label={
+                            <Button startIcon={<AddIcon />}>Add Service</Button>
+                          }
+                          size="small"
+                          color={"info"}
+                          onClick={() =>
+                            handleAddTaxServiceChange(taxYear.name)
+                          }
+                          sx={{
+                            backgroundColor: "#fff",
+                            "&:hover": {
+                              backgroundColor: "#fff",
+                            },
+                          }}
+                        />
+                      )}
+                    </Box>
+                    <Typography
+                      sx={{
+                        fontSize: "18px",
+                        lineHeight: "25px",
+                        fontWeight: 700,
+                        color: "rgb(71,71,71)",
+                        minWidth: "150px",
+                        margin: "20px 0",
+                      }}
+                    >
+                      {`${taxYear.name} - Tax Filing`}
+                    </Typography>
+                  </Box>
+                </Grid>
+              );
+            })}
+        </Grid>
+      </Box>
+      <Box>
         <Typography className={customStyles.headerText}>
           My Selected Services
         </Typography>
@@ -183,43 +274,46 @@ const ClientHomePage = () => {
             sx={{
               borderCollapse: "collapse",
             }}
-            aria-label="Place Order Series Table"
           >
             <TableHead>
               <TableRow>
-                <TableCell className={customStyles.tableHeader}>ID</TableCell>
-                <TableCell className={customStyles.tableHeader}>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  ID
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
                   SERVICE TYPE
-                </TableCell>
-                <TableCell className={customStyles.tableHeader}>YEAR</TableCell>
-                <TableCell className={customStyles.tableHeader}>
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
+                  YEAR
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
                   STATUS
-                </TableCell>
-                <TableCell className={customStyles.tableHeader}>
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
                   ACTIONS
-                </TableCell>
-                <TableCell className={customStyles.tableHeader}>
+                </StyledTableCell>
+                <StyledTableCell className={customStyles.tableHeader}>
                   PAY NOW
-                </TableCell>
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {myServices.length > 0 &&
                 myServices.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell className={customStyles.tableData}>
+                    <StyledTableCell className={customStyles.tableData}>
                       {row.id}
-                    </TableCell>
-                    <TableCell className={customStyles.tableData}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
                       {row.service_type}
-                    </TableCell>
-                    <TableCell className={customStyles.tableData}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
                       {row.year}
-                    </TableCell>
-                    <TableCell className={customStyles.tableData}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
                       {row.status}
-                    </TableCell>
-                    <TableCell className={customStyles.tableData}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
                       <Link
                         to={`../tax-filing/${row.year}/${row.id}/0`}
                         onClick={() =>
@@ -231,8 +325,8 @@ const ClientHomePage = () => {
                       >
                         Start Process
                       </Link>
-                    </TableCell>
-                    <TableCell className={customStyles.tableData}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableData}>
                       <Link
                         to={`../tax-filing/${row.year}/${row.id}/7`}
                         onClick={() =>
@@ -244,8 +338,8 @@ const ClientHomePage = () => {
                       >
                         Pay Now
                       </Link>
-                    </TableCell>
-                    <TableCell className={customStyles.mobileView}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.mobileView}>
                       <Box>
                         <Box
                           sx={{
@@ -257,39 +351,51 @@ const ClientHomePage = () => {
                         >
                           <Box>
                             <Typography
-                              className={customStyles.mobileViewTableCellHeader}
+                              className={
+                                customStyles.mobileViewStyledTableCellHeader
+                              }
                             >
                               id
                             </Typography>
 
                             <Typography
-                              className={customStyles.mobileViewTableCellValue}
+                              className={
+                                customStyles.mobileViewStyledTableCellValue
+                              }
                             >
                               {row.id}
                             </Typography>
                           </Box>
                           <Box>
                             <Typography
-                              className={customStyles.mobileViewTableCellHeader}
+                              className={
+                                customStyles.mobileViewStyledTableCellHeader
+                              }
                             >
                               Year
                             </Typography>
 
                             <Typography
-                              className={customStyles.mobileViewTableCellValue}
+                              className={
+                                customStyles.mobileViewStyledTableCellValue
+                              }
                             >
                               {row.year}
                             </Typography>
                           </Box>
                           <Box>
                             <Typography
-                              className={customStyles.mobileViewTableCellHeader}
+                              className={
+                                customStyles.mobileViewStyledTableCellHeader
+                              }
                             >
                               Service Type
                             </Typography>
 
                             <Typography
-                              className={customStyles.mobileViewTableCellValue}
+                              className={
+                                customStyles.mobileViewStyledTableCellValue
+                              }
                             >
                               {row.service_type}
                             </Typography>
@@ -305,25 +411,33 @@ const ClientHomePage = () => {
                         >
                           <Box>
                             <Typography
-                              className={customStyles.mobileViewTableCellHeader}
+                              className={
+                                customStyles.mobileViewStyledTableCellHeader
+                              }
                             >
                               Status
                             </Typography>
 
                             <Typography
-                              className={customStyles.mobileViewTableCellValue}
+                              className={
+                                customStyles.mobileViewStyledTableCellValue
+                              }
                             >
                               {row.status}
                             </Typography>
                           </Box>
                           <Box>
                             <Typography
-                              className={customStyles.mobileViewTableCellHeader}
+                              className={
+                                customStyles.mobileViewStyledTableCellHeader
+                              }
                             >
                               Actions
                             </Typography>
                             <Typography
-                              className={customStyles.mobileViewTableCellValue}
+                              className={
+                                customStyles.mobileViewStyledTableCellValue
+                              }
                             >
                               <Link
                                 to={`../tax-filing/${row.year}/${row.id}/0`}
@@ -340,12 +454,16 @@ const ClientHomePage = () => {
                           </Box>
                           <Box>
                             <Typography
-                              className={customStyles.mobileViewTableCellHeader}
+                              className={
+                                customStyles.mobileViewStyledTableCellHeader
+                              }
                             >
                               Pay Now
                             </Typography>
                             <Typography
-                              className={customStyles.mobileViewTableCellValue}
+                              className={
+                                customStyles.mobileViewStyledTableCellValue
+                              }
                             >
                               <Link
                                 to={`../tax-filing/${row.year}/${row.id}/7`}
@@ -364,81 +482,13 @@ const ClientHomePage = () => {
                           </Box>
                         </Box>
                       </Box>
-                    </TableCell>
+                    </StyledTableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <Box
-          sx={{
-            marginTop: "25px",
-          }}
-        >
-          <FormControl>
-            <FormLabel
-              id="demo-radio-buttons-group-label"
-              className={customStyles.headerText}
-            >
-              Select Tax Service
-            </FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              name="radio-buttons-group"
-              value={currSelectedYear}
-              onChange={handleCurrYearTaxServiceChange}
-              color="secondary"
-            >
-              <Grid container>
-                {taxYearServices.length > 0 &&
-                  taxYearServices.map((each, id) => (
-                    <Grid item xs={4} key={id} sx={{ marginLeft: "30px" }}>
-                      <FormControlLabel
-                        value={each.name}
-                        control={<Radio />}
-                        label={
-                          <div
-                            style={{
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              width: "100%",
-                            }}
-                          >
-                            {`${each.name} - Tax Filing`}
-                          </div>
-                        }
-                      />
-                    </Grid>
-                  ))}
-              </Grid>
-            </RadioGroup>
-          </FormControl>
-          <Button
-            onClick={() => currSelectedYear && handleAddTaxServiceChange()}
-            variant="contained"
-            className={customStyles.confirmButton}
-            color="secondary"
-            sx={{
-              opacity:
-                // isLoadingSpin ||
-                !currSelectedYear ? 0.5 : 1,
-              marginLeft: "12px",
-              marginTop: "10px",
-              display: "block",
-            }}
-          >
-            Add Service{"  "}
-            {/* {isLoadingSpin && (
-                <CircularProgress
-                  size={15}
-                  color="primary"
-                  sx={{ marginLeft: "15px" }}
-                />
-              )} */}
-          </Button>
-        </Box>
-      </Container>
+      </Box>
     </Box>
   );
 };

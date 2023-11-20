@@ -92,343 +92,333 @@ const BankDetails = ({ id, data, handleFetchData }) => {
   return (
     <Box
       sx={{
-        padding: "20px 0 5px",
-        border: { xs: "none", sm: "1px solid #3A97BB" },
+        padding: "20px 30px 5px",
+        border: { xs: "none", sm: "none" },
         minHeight: { xs: "auto", sm: "800px" },
       }}
     >
-      {" "}
-      <Container>
-        {isBankDetailsLoading ? (
-          <CircularProgress />
-        ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              setIsBankDetailsLoading(true);
-              setSubmitting(true);
-              let payload = { ...values, id: id };
-              privateApiPOST(Api.bankDetails, payload)
-                .then((response) => {
-                  const { status, data } = response;
-                  if (status === 200) {
-                    console.log("data", data);
-                    setIsBankDetailsLoading(false);
-                    handleFetchData();
-                    setSubmitting(false);
-                  }
-                })
-                .catch((error) => {
-                  console.log("Error", error);
+      {isBankDetailsLoading ? (
+        <CircularProgress />
+      ) : (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            setIsBankDetailsLoading(true);
+            setSubmitting(true);
+            let payload = { ...values, id: id };
+            privateApiPOST(Api.bankDetails, payload)
+              .then((response) => {
+                const { status, data } = response;
+                if (status === 200) {
+                  console.log("data", data);
                   setIsBankDetailsLoading(false);
+                  handleFetchData();
                   setSubmitting(false);
-                });
-            }}
-          >
-            {({ values, handleChange, errors, touched, handleBlur }) => (
-              <Form>
-                <Grid container spacing={2} sx={{ marginLeft: "0px" }}>
-                  <Box
-                    width="98%"
-                    align="left"
-                    sx={{
-                      border: "1px solid #000000",
-                      padding: "20px",
-                      marginBottom: "20px",
-                      backgroundColor: "#f7f7f7",
-                    }}
-                  >
-                    <fieldset>
-                      <legend>Bank Details</legend>
-                      <br />
-                      <Typography
-                        color="brown"
-                        variant="h4"
-                        sx={{ marginTop: "10px" }}
-                      >
-                        <b>Important Note</b>
-                      </Typography>
-                      <Typography
-                        align="justify"
-                        sx={{ marginTop: "5px", wordSpacing: "3px" }}
-                      >
-                        The IRS and certain State Revenue Departments facilitate
-                        DIRECT DEPOSIT / WITHDRAWAL of Tax Refund or Tax Dues on
-                        the Tax Returns. If you are interested in availing this
-                        option, we request you to kindly input the following
-                        details. You may also provide multiple bank accounts for
-                        IRS to direct deposit your Tax Refund in different
-                        accounts.
-                      </Typography>
-                      <br />
-                      <br />
-                    </fieldset>
-                  </Box>
-                  <Grid
-                    container
-                    sx={{ marginBottom: "30px", marginTop: "30px" }}
-                  >
-                    <Grid
-                      item
-                      xs={10}
-                      sm={4}
-                      style={{ display: "flex", alignItems: "center" }}
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+                setIsBankDetailsLoading(false);
+                setSubmitting(false);
+              });
+          }}
+        >
+          {({ values, handleChange, errors, touched, handleBlur }) => (
+            <Form>
+              <Grid container spacing={2} sx={{ marginLeft: "0px" }}>
+                <Box
+                  width="98%"
+                  align="left"
+                  sx={{
+                    border: "1px solid #000000",
+                    padding: "20px",
+                    marginBottom: "20px",
+                    backgroundColor: "#f7f7f7",
+                  }}
+                >
+                  <fieldset>
+                    <legend>Bank Details</legend>
+                    <br />
+                    <Typography
+                      color="brown"
+                      variant="h4"
+                      sx={{ marginTop: "10px" }}
                     >
-                      <Typography variant="body1">
-                        I prefer to receive my tax refunds by way of
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2} sm={4}>
-                      <select
-                        id="bankingType"
-                        name="bankingType"
-                        value={values.bankingType}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        style={{ width: "100%" }}
-                      >
-                        <option value="">Select Option</option>
-                        <option value="DIRECT DEPOSIT INTO MY BANK ACCOUNT">
-                          Direct deposit into my bank account
-                        </option>
-                        <option value="PAPER CHECK">Paper Check</option>
-                      </select>
-                      {touched.bankingType && errors.bankingType && (
-                        <div className="error">{errors.bankingType}</div>
-                      )}
-                    </Grid>
-                    <Grid>
-                      {" "}
-                      <Typography
-                        variant="h5"
-                        sx={{ marginTop: "30px", marginLeft: "15px" }}
-                      >
-                        Bank Account Information
-                      </Typography>
-                      <Typography
-                        sx={{
-                          marginTop: "30px",
-                          marginLeft: "15px",
-                          color: "red",
-                        }}
-                      >
-                        Note: Please understand that there is no risk by
-                        entering Bank Account and Routing Numbers
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                {/* Additional Fields for Direct Deposit */}
-
-                <Grid>
+                      <b>Important Note</b>
+                    </Typography>
+                    <Typography
+                      align="justify"
+                      sx={{ marginTop: "5px", wordSpacing: "3px" }}
+                    >
+                      The IRS and certain State Revenue Departments facilitate
+                      DIRECT DEPOSIT / WITHDRAWAL of Tax Refund or Tax Dues on
+                      the Tax Returns. If you are interested in availing this
+                      option, we request you to kindly input the following
+                      details. You may also provide multiple bank accounts for
+                      IRS to direct deposit your Tax Refund in different
+                      accounts.
+                    </Typography>
+                    <br />
+                    <br />
+                  </fieldset>
+                </Box>
+                <Grid
+                  container
+                  sx={{ marginBottom: "30px", marginTop: "30px" }}
+                >
                   <Grid
-                    container
-                    spacing={2}
-                    sx={{
-                      border: "1px solid #000000",
-                      padding: "20px",
-                      marginBottom: "20px",
-                      backgroundColor: "#C7DFF0",
-                    }}
+                    item
+                    xs={10}
+                    sm={4}
+                    style={{ display: "flex", alignItems: "center" }}
                   >
-                    <Grid item lg={6} sm={6} xs={12}>
-                      <CustomInputTextField
-                        attribute="Bank Name"
-                        is_required={false}
-                        margin="normal"
-                        name="bankName"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.bankName}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(touched.bankName && errors.bankName)}
-                        helperText={touched.bankName && errors.bankName}
-                      />
-                      <CustomInputTextField
-                        attribute="Account Number"
-                        is_required={false}
-                        margin="normal"
-                        name="accountNumber"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.accountNumber}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.accountNumber && errors.accountNumber
-                        )}
-                        helperText={
-                          touched.accountNumber && errors.accountNumber
-                        }
-                      />
-
-                      <CustomInputTextField
-                        attribute="Routing Number"
-                        is_required={false}
-                        margin="normal"
-                        name="routingNumber"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.routingNumber}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.routingNumber && errors.routingNumber
-                        )}
-                        helperText={
-                          touched.routingNumber && errors.routingNumber
-                        }
-                      />
-                      <CustomInputTextField
-                        attribute="Account Type"
-                        is_required={false}
-                        margin="normal"
-                        name="accountType"
-                        select
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.accountType}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.accountType && errors.accountType
-                        )}
-                        helperText={touched.accountType && errors.accountType}
-                      >
-                        <MenuItem value="SAVINGS">Savings</MenuItem>
-                        <MenuItem value="CHECKING">Checking</MenuItem>
-                      </CustomInputTextField>
-                      <CustomInputTextField
-                        attribute="Ownership"
-                        is_required={false}
-                        margin="normal"
-                        name="ownership"
-                        select
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.ownership}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(touched.ownership && errors.ownership)}
-                        helperText={touched.ownership && errors.ownership}
-                      >
-                        <MenuItem value="TAXPAYER/SPOUSE">
-                          Tax Payer / Spouse
-                        </MenuItem>
-                        <MenuItem value="JOINT">Joint</MenuItem>
-                      </CustomInputTextField>
-                    </Grid>
-                    <Grid item lg={6} sm={6} xs={12}>
-                      <CustomInputTextField
-                        attribute="Account Holder Name"
-                        is_required={false}
-                        margin="normal"
-                        name="accountHolderName"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.accountHolderName}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.accountHolderName && errors.accountHolderName
-                        )}
-                        helperText={
-                          touched.accountHolderName && errors.accountHolderName
-                        }
-                      />
-
-                      <CustomInputTextField
-                        attribute="Confirm Account Number"
-                        is_required={false}
-                        margin="normal"
-                        name="confirmAccountNumber"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.confirmAccountNumber}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.confirmAccountNumber &&
-                            errors.confirmAccountNumber
-                        )}
-                        helperText={
-                          touched.confirmAccountNumber &&
-                          errors.confirmAccountNumber
-                        }
-                      />
-                      <CustomInputTextField
-                        attribute="Confirm Routing Number"
-                        is_required={false}
-                        margin="normal"
-                        name="confirmRoutingNumber"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        fullWidth
-                        value={values.confirmRoutingNumber}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.confirmRoutingNumber &&
-                            errors.confirmRoutingNumber
-                        )}
-                        helperText={
-                          touched.confirmRoutingNumber &&
-                          errors.confirmRoutingNumber
-                        }
-                      />
-                      <CustomInputTextField
-                        attribute="Confirm Account Type"
-                        is_required={false}
-                        margin="normal"
-                        name="confirmAccountType"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        select
-                        fullWidth
-                        value={values.confirmAccountType}
-                        variant="outlined"
-                        disabled={values.bankingType === "PAPER CHECK"}
-                        error={Boolean(
-                          touched.confirmAccountType &&
-                            errors.confirmAccountType
-                        )}
-                        helperText={
-                          touched.confirmAccountType &&
-                          errors.confirmAccountType
-                        }
-                      >
-                        <MenuItem value="SAVINGS">Savings</MenuItem>
-                        <MenuItem value="CHECKING">Checking</MenuItem>
-                      </CustomInputTextField>
-                    </Grid>
+                    <Typography variant="body1">
+                      I prefer to receive my tax refunds by way of
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2} sm={4}>
+                    <select
+                      id="bankingType"
+                      name="bankingType"
+                      value={values.bankingType}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      style={{ width: "100%" }}
+                    >
+                      <option value="">Select Option</option>
+                      <option value="DIRECT DEPOSIT INTO MY BANK ACCOUNT">
+                        Direct deposit into my bank account
+                      </option>
+                      <option value="PAPER CHECK">Paper Check</option>
+                    </select>
+                    {touched.bankingType && errors.bankingType && (
+                      <div className="error">{errors.bankingType}</div>
+                    )}
+                  </Grid>
+                  <Grid>
+                    {" "}
+                    <Typography
+                      variant="h5"
+                      sx={{ marginTop: "30px", marginLeft: "15px" }}
+                    >
+                      Bank Account Information
+                    </Typography>
+                    <Typography
+                      sx={{
+                        marginTop: "30px",
+                        marginLeft: "15px",
+                        color: "red",
+                      }}
+                    >
+                      Note: Please understand that there is no risk by entering
+                      Bank Account and Routing Numbers
+                    </Typography>
                   </Grid>
                 </Grid>
+              </Grid>
+              {/* Additional Fields for Direct Deposit */}
+
+              <Grid>
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{
+                    border: "1px solid #000000",
+                    padding: "20px",
+                    marginBottom: "20px",
+                    backgroundColor: "#C7DFF0",
+                  }}
+                >
+                  <Grid item lg={6} sm={6} xs={12}>
+                    <CustomInputTextField
+                      attribute="Bank Name"
+                      is_required={false}
+                      margin="normal"
+                      name="bankName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.bankName}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(touched.bankName && errors.bankName)}
+                      helperText={touched.bankName && errors.bankName}
+                    />
+                    <CustomInputTextField
+                      attribute="Account Number"
+                      is_required={false}
+                      margin="normal"
+                      name="accountNumber"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.accountNumber}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(
+                        touched.accountNumber && errors.accountNumber
+                      )}
+                      helperText={touched.accountNumber && errors.accountNumber}
+                    />
+
+                    <CustomInputTextField
+                      attribute="Routing Number"
+                      is_required={false}
+                      margin="normal"
+                      name="routingNumber"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.routingNumber}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(
+                        touched.routingNumber && errors.routingNumber
+                      )}
+                      helperText={touched.routingNumber && errors.routingNumber}
+                    />
+                    <CustomInputTextField
+                      attribute="Account Type"
+                      is_required={false}
+                      margin="normal"
+                      name="accountType"
+                      select
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.accountType}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(touched.accountType && errors.accountType)}
+                      helperText={touched.accountType && errors.accountType}
+                    >
+                      <MenuItem value="SAVINGS">Savings</MenuItem>
+                      <MenuItem value="CHECKING">Checking</MenuItem>
+                    </CustomInputTextField>
+                    <CustomInputTextField
+                      attribute="Ownership"
+                      is_required={false}
+                      margin="normal"
+                      name="ownership"
+                      select
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.ownership}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(touched.ownership && errors.ownership)}
+                      helperText={touched.ownership && errors.ownership}
+                    >
+                      <MenuItem value="TAXPAYER/SPOUSE">
+                        Tax Payer / Spouse
+                      </MenuItem>
+                      <MenuItem value="JOINT">Joint</MenuItem>
+                    </CustomInputTextField>
+                  </Grid>
+                  <Grid item lg={6} sm={6} xs={12}>
+                    <CustomInputTextField
+                      attribute="Account Holder Name"
+                      is_required={false}
+                      margin="normal"
+                      name="accountHolderName"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.accountHolderName}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(
+                        touched.accountHolderName && errors.accountHolderName
+                      )}
+                      helperText={
+                        touched.accountHolderName && errors.accountHolderName
+                      }
+                    />
+
+                    <CustomInputTextField
+                      attribute="Confirm Account Number"
+                      is_required={false}
+                      margin="normal"
+                      name="confirmAccountNumber"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.confirmAccountNumber}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(
+                        touched.confirmAccountNumber &&
+                          errors.confirmAccountNumber
+                      )}
+                      helperText={
+                        touched.confirmAccountNumber &&
+                        errors.confirmAccountNumber
+                      }
+                    />
+                    <CustomInputTextField
+                      attribute="Confirm Routing Number"
+                      is_required={false}
+                      margin="normal"
+                      name="confirmRoutingNumber"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      fullWidth
+                      value={values.confirmRoutingNumber}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(
+                        touched.confirmRoutingNumber &&
+                          errors.confirmRoutingNumber
+                      )}
+                      helperText={
+                        touched.confirmRoutingNumber &&
+                        errors.confirmRoutingNumber
+                      }
+                    />
+                    <CustomInputTextField
+                      attribute="Confirm Account Type"
+                      is_required={false}
+                      margin="normal"
+                      name="confirmAccountType"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      select
+                      fullWidth
+                      value={values.confirmAccountType}
+                      variant="outlined"
+                      disabled={values.bankingType === "PAPER CHECK"}
+                      error={Boolean(
+                        touched.confirmAccountType && errors.confirmAccountType
+                      )}
+                      helperText={
+                        touched.confirmAccountType && errors.confirmAccountType
+                      }
+                    >
+                      <MenuItem value="SAVINGS">Savings</MenuItem>
+                      <MenuItem value="CHECKING">Checking</MenuItem>
+                    </CustomInputTextField>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "flex-end",
-                    paddingBottom: { xs: "20px" },
-                    marginTop: { xs: "20px" },
+                    justifyContent: "center",
+                    margin: { xs: "8px 0", sm: "16px 0" },
                   }}
                 >
                   <Button type="submit" variant="contained" color="primary">
-                    Save
+                    SAVE
                   </Button>
                 </Box>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </Container>
+              </Grid>
+            </Form>
+          )}
+        </Formik>
+      )}
     </Box>
   );
 };

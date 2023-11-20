@@ -33,6 +33,8 @@ import {
   privateApiPOST,
 } from "../../../../components/PrivateRoute";
 
+import { StyledTableCell } from "..";
+
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
@@ -65,7 +67,7 @@ export const customTextStyles = makeStyles((theme) => ({
     padding: "10px 40px 9px",
     marginBottom: "4px",
   },
-  mobileViewTableCellValue: {
+  mobileViewStyledTableCellValue: {
     color: "rgb(71, 71, 71)",
     fontSize: "14px",
     fontWeight: "400",
@@ -81,7 +83,7 @@ export const customTextStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  mobileViewTableCellHeader: {
+  mobileViewStyledTableCellHeader: {
     color: "rgb(245, 166, 35)",
     fontSize: "10px",
     fontWeight: "400",
@@ -152,7 +154,7 @@ const AssociatesListPage = () => {
       handleFetchAssociateDetails();
     }
   }, []);
-  console.log(associateDetails);
+
   return (
     <Box>
       {showAlert.isAlert ? (
@@ -218,50 +220,49 @@ const AssociatesListPage = () => {
                 sx={{
                   borderCollapse: "collapse",
                 }}
-                aria-label="Place Order Series Table"
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell className={customStyles.tableHeader}>
+                    <StyledTableCell className={customStyles.tableHeader}>
                       First Name
-                    </TableCell>
-                    <TableCell className={customStyles.tableHeader}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableHeader}>
                       Last Name
-                    </TableCell>
-                    <TableCell className={customStyles.tableHeader}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableHeader}>
                       Email Id
-                    </TableCell>
-                    <TableCell className={customStyles.tableHeader}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableHeader}>
                       Contact No
-                    </TableCell>
-                    <TableCell className={customStyles.tableHeader}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableHeader}>
                       Associate Code
-                    </TableCell>
-                    <TableCell className={customStyles.tableHeader}>
+                    </StyledTableCell>
+                    <StyledTableCell className={customStyles.tableHeader}>
                       Action
-                    </TableCell>
+                    </StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {associateDetails.length > 0 &&
                     associateDetails.map((row, id) => (
                       <TableRow key={id}>
-                        <TableCell className={customStyles.tableData}>
+                        <StyledTableCell className={customStyles.tableData}>
                           {row.first_name}
-                        </TableCell>
-                        <TableCell className={customStyles.tableData}>
+                        </StyledTableCell>
+                        <StyledTableCell className={customStyles.tableData}>
                           {row.last_name}
-                        </TableCell>
-                        <TableCell className={customStyles.tableData}>
+                        </StyledTableCell>
+                        <StyledTableCell className={customStyles.tableData}>
                           {row.email}
-                        </TableCell>
-                        <TableCell className={customStyles.tableData}>
+                        </StyledTableCell>
+                        <StyledTableCell className={customStyles.tableData}>
                           {row.contact_no}
-                        </TableCell>
-                        <TableCell className={customStyles.tableData}>
+                        </StyledTableCell>
+                        <StyledTableCell className={customStyles.tableData}>
                           {row.code}
-                        </TableCell>
-                        <TableCell>
+                        </StyledTableCell>
+                        <StyledTableCell>
                           <Button
                             disabled={isDeleteLoadingSpin}
                             startIcon={<DeleteIcon />}
@@ -276,8 +277,8 @@ const AssociatesListPage = () => {
                               <CircularProgress sx={{ ml: 1 }} size={14} />
                             )}
                           </Button>
-                        </TableCell>
-                        <TableCell className={customStyles.mobileView}>
+                        </StyledTableCell>
+                        <StyledTableCell className={customStyles.mobileView}>
                           <Box>
                             <Box
                               sx={{
@@ -289,7 +290,7 @@ const AssociatesListPage = () => {
                               <Box sx={{ marginTop: "3px" }}>
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellHeader
+                                    customStyles.mobileViewStyledTableCellHeader
                                   }
                                 >
                                   First Name
@@ -297,7 +298,7 @@ const AssociatesListPage = () => {
 
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellValue
+                                    customStyles.mobileViewStyledTableCellValue
                                   }
                                 >
                                   {row.first_name}
@@ -306,7 +307,7 @@ const AssociatesListPage = () => {
                               <Box sx={{ marginTop: "3px" }}>
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellHeader
+                                    customStyles.mobileViewStyledTableCellHeader
                                   }
                                 >
                                   Last Name
@@ -314,7 +315,7 @@ const AssociatesListPage = () => {
 
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellValue
+                                    customStyles.mobileViewStyledTableCellValue
                                   }
                                 >
                                   {row.last_name}
@@ -331,7 +332,7 @@ const AssociatesListPage = () => {
                               <Box sx={{ marginTop: "3px" }}>
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellHeader
+                                    customStyles.mobileViewStyledTableCellHeader
                                   }
                                 >
                                   Email Id
@@ -339,7 +340,7 @@ const AssociatesListPage = () => {
 
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellValue
+                                    customStyles.mobileViewStyledTableCellValue
                                   }
                                 >
                                   {row.email}
@@ -348,7 +349,7 @@ const AssociatesListPage = () => {
                               <Box sx={{ marginTop: "3px" }}>
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellHeader
+                                    customStyles.mobileViewStyledTableCellHeader
                                   }
                                 >
                                   Phone Number
@@ -356,7 +357,7 @@ const AssociatesListPage = () => {
 
                                 <Typography
                                   className={
-                                    customStyles.mobileViewTableCellValue
+                                    customStyles.mobileViewStyledTableCellValue
                                   }
                                 >
                                   {row.phone_no}
@@ -364,12 +365,20 @@ const AssociatesListPage = () => {
                               </Box>
                             </Box>
                           </Box>
-                        </TableCell>
+                        </StyledTableCell>
                       </TableRow>
                     ))}
                 </TableBody>
               </Table>
             </TableContainer>
+          )}
+          {associateDetails.length === 0 && !isLoadingSpin && (
+            <Typography
+              variant="h5"
+              sx={{ textAlign: "center", margin: "10px 0" }}
+            >
+              No Records Found
+            </Typography>
           )}
         </Box>
       </Box>

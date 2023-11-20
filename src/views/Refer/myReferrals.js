@@ -25,6 +25,8 @@ import {
 import { makeStyles } from "@mui/styles";
 import Api from "../../components/Api";
 import { privateApiGET } from "../../components/PrivateRoute";
+import { StyledTableCell } from ".";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
@@ -58,7 +60,7 @@ export const customTextStyles = makeStyles((theme) => ({
     padding: "10px 40px 9px",
     marginBottom: "4px",
   },
-  mobileViewTableCellValue: {
+  mobileViewStyledTableCellValue: {
     color: "rgb(71, 71, 71)",
     fontSize: "14px",
     fontWeight: "400",
@@ -74,7 +76,7 @@ export const customTextStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  mobileViewTableCellHeader: {
+  mobileViewStyledTableCellHeader: {
     color: "rgb(245, 166, 35)",
     fontSize: "10px",
     fontWeight: "400",
@@ -125,58 +127,71 @@ const MyReferrals = () => {
         bgcolor: "#ffffff",
         transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
         borderRadius: "6px",
-        boxShadow: "0px 2px 8px 0px rgba(99, 99, 99, 0.2)",
+        boxShadow:
+          "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
         overflow: "hidden",
         marginTop: "20px",
         color: "#333333",
         backgroundImage: "none",
+        height: "800px",
+        overflow: "auto",
+        maxHeight: "800px",
       }}
     >
-      <Container>
+      <PerfectScrollbar>
+        {/* <Container> */}
         <Box>
-          <Typography variant="h4" sx={{ marginLeft: "10px" }}>
-            Registerd Till Now:
+          <Typography
+            sx={{
+              color: "rgba(71,71,71,1)",
+              fontSize: "24px",
+              fontWeight: 400,
+              lineHeight: "33px",
+              textAlign: "left",
+              marginBottom: "16px",
+            }}
+          >
+            Registered Till Now
           </Typography>
           <TableContainer sx={{ marginTop: "32px" }}>
             <Table
               sx={{
                 borderCollapse: "collapse",
               }}
-              aria-label="Place Order Series Table"
             >
               <TableHead>
                 <TableRow>
-                  <TableCell className={customStyles.tableHeader}>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     First Name
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
+                  </StyledTableCell>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     Last Name
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
+                  </StyledTableCell>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     Email Id
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
+                  </StyledTableCell>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     Phone Number
-                  </TableCell>
+                  </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {referalDetails["joined"].length > 0 &&
                   referalDetails["joined"].map((row, id) => (
                     <TableRow key={id}>
-                      <TableCell className={customStyles.tableData}>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.first_name}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.last_name}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.email}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.phone_no}
-                      </TableCell>
-                      <TableCell className={customStyles.mobileView}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.mobileView}>
                         <Box>
                           <Box
                             sx={{
@@ -188,7 +203,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 First Name
@@ -196,7 +211,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.first_name}
@@ -205,7 +220,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 Last Name
@@ -213,7 +228,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.last_name}
@@ -230,7 +245,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 Email Id
@@ -238,7 +253,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.email}
@@ -247,7 +262,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 Phone Number
@@ -255,7 +270,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.phone_no}
@@ -263,57 +278,73 @@ const MyReferrals = () => {
                             </Box>
                           </Box>
                         </Box>
-                      </TableCell>
+                      </StyledTableCell>
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
+            {referalDetails["joined"].length === 0 && (
+              <Typography
+                variant="h5"
+                sx={{ textAlign: "center", margin: "10px 0" }}
+              >
+                No Records Found
+              </Typography>
+            )}
           </TableContainer>
         </Box>
         <Box sx={{ marginTop: { xs: "16px", sm: "24px" } }}>
-          <Typography variant="h4" sx={{ marginLeft: "10px" }}>
-            Referred Till Now:
+          <Typography
+            sx={{
+              color: "rgba(71,71,71,1)",
+              fontSize: "24px",
+              fontWeight: 400,
+              lineHeight: "33px",
+              textAlign: "left",
+              marginBottom: "16px",
+            }}
+          >
+            Referred Till Now
           </Typography>
           <TableContainer sx={{ marginTop: "32px" }}>
             <Table
               sx={{
                 borderCollapse: "collapse",
               }}
-              aria-label="Place Order Series Table"
             >
               <TableHead>
                 <TableRow>
-                  <TableCell className={customStyles.tableHeader}>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     First Name
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
+                  </StyledTableCell>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     Last Name
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
+                  </StyledTableCell>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     Email Id
-                  </TableCell>
-                  <TableCell className={customStyles.tableHeader}>
+                  </StyledTableCell>
+                  <StyledTableCell className={customStyles.tableHeader}>
                     Phone Number
-                  </TableCell>
+                  </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {referalDetails["not_joined"].length > 0 &&
                   referalDetails["not_joined"].map((row, id) => (
                     <TableRow key={id}>
-                      <TableCell className={customStyles.tableData}>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.first_name}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.last_name}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.email}
-                      </TableCell>
-                      <TableCell className={customStyles.tableData}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.tableData}>
                         {row.contact_no}
-                      </TableCell>
-                      <TableCell className={customStyles.mobileView}>
+                      </StyledTableCell>
+                      <StyledTableCell className={customStyles.mobileView}>
                         <Box>
                           <Box
                             sx={{
@@ -325,7 +356,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px", marginRight: "10px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 First Name
@@ -333,7 +364,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.first_name}
@@ -342,7 +373,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px", marginRight: "10px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 Last Name
@@ -350,7 +381,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.last_name}
@@ -367,7 +398,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 Email Id
@@ -375,7 +406,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.email}
@@ -384,7 +415,7 @@ const MyReferrals = () => {
                             <Box sx={{ marginTop: "3px" }}>
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellHeader
+                                  customStyles.mobileViewStyledTableCellHeader
                                 }
                               >
                                 Phone Number
@@ -392,7 +423,7 @@ const MyReferrals = () => {
 
                               <Typography
                                 className={
-                                  customStyles.mobileViewTableCellValue
+                                  customStyles.mobileViewStyledTableCellValue
                                 }
                               >
                                 {row.contact_no}
@@ -400,14 +431,23 @@ const MyReferrals = () => {
                             </Box>
                           </Box>
                         </Box>
-                      </TableCell>
+                      </StyledTableCell>
                     </TableRow>
                   ))}
               </TableBody>
             </Table>
+            {referalDetails["not_joined"].length === 0 && (
+              <Typography
+                variant="h5"
+                sx={{ textAlign: "center", margin: "10px 0" }}
+              >
+                No Records Found
+              </Typography>
+            )}
           </TableContainer>
         </Box>
-      </Container>
+        {/* </Container> */}
+      </PerfectScrollbar>
     </Box>
   );
 };

@@ -11,6 +11,8 @@ import {
   Card,
   CircularProgress,
   IconButton,
+  TableCell,
+  styled,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
@@ -103,6 +105,21 @@ export const customTextStyles = makeStyles((theme) => ({
   },
 }));
 
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  "&": {
+    backgroundColor: "#FFFFFF",
+    borderWidth: "1px 0",
+    borderStyle: "solid",
+    borderColor: "#E2EBFF",
+    "&:first-of-type": {
+      borderLeftWidth: "1px",
+    },
+    "&:nth-last-of-type(2)": {
+      borderRightWidth: "1px",
+    },
+  },
+}));
+
 const AdminHomePage = () => {
   const customStyles = customTextStyles();
   let navigate = useNavigate();
@@ -111,139 +128,49 @@ const AdminHomePage = () => {
   const [data, setData] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [isLoadingSpin, setIsLoadingSpin] = useState(false);
-  const [isActiveTab, setIsActiveTab] =
-    parseInt(params.action) === 7
-      ? useState("Pay Now")
-      : useState("Search Clients");
-
-  const handleActiveTabChange = (tabName) => {
-    setIsActiveTab(tabName);
-  };
 
   useEffect(() => {}, []);
 
   return (
     <Box>
-      <Container maxWidth="lg">
-        <Grid container>
-          <Grid item xs={isMenuOpen ? 3 : 1}>
-            <Card
-              sx={{
-                minHeight: isMenuOpen ? "320px" : "50px",
-                borderRadius: "2px",
-                marginRight: "10px",
-              }}
-            >
-              <IconButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                <MenuIcon />
-              </IconButton>
-
-              {isMenuOpen && (
-                <Box>
-                  <Box
-                    sx={{
-                      border: "1px solid #D5D5D5",
-                      margin: "10px 5px",
-                    }}
-                  >
-                    <Typography className={customStyles.tabHeader}>
-                      Manage Client Information
-                    </Typography>
-                    <Button
-                      onClick={() => handleActiveTabChange("Search Clients")}
-                      variant={
-                        isActiveTab === "Search Clients" ? "contained" : "text"
-                      }
-                      className={customStyles.tabButton}
-                      sx={{
-                        color:
-                          isActiveTab === "Search Clients" ? "#fff" : "#474747",
-                      }}
-                    >
-                      Search Clients (New)
-                    </Button>
-                  </Box>
-                  <Box
-                    sx={{
-                      border: "1px solid #D5D5D5",
-                      margin: "30px 5px 10px",
-                    }}
-                  >
-                    <Typography className={customStyles.tabHeader}>
-                      Manage Associate Information
-                    </Typography>
-                    <Button
-                      onClick={() => handleActiveTabChange("Associates List")}
-                      variant={
-                        isActiveTab === "Associates List" ? "contained" : "text"
-                      }
-                      className={customStyles.tabButton}
-                      sx={{
-                        color:
-                          isActiveTab === "Associates List"
-                            ? "#fff"
-                            : "#474747",
-                      }}
-                    >
-                      Associates List
-                    </Button>
-                    <Button
-                      onClick={() => handleActiveTabChange("Add Associate")}
-                      variant={
-                        isActiveTab === "Add Associate" ? "contained" : "text"
-                      }
-                      className={customStyles.tabButton}
-                      sx={{
-                        color:
-                          isActiveTab === "Add Associate" ? "#fff" : "#474747",
-                      }}
-                    >
-                      Add Associate
-                    </Button>
-                  </Box>
-                </Box>
-              )}
-            </Card>
-          </Grid>
-          <Grid item xs={isMenuOpen ? 9 : 11}>
-            {isLoadingSpin ? (
-              <Box
-                display="flex"
-                height="100%"
-                width="100%"
-                justifyContent="center"
-                alignItems="center"
-                sx={{
-                  position: "absolute",
-                  zIndex: "10",
-                  left: 0,
-                  top: "30%",
-                }}
-              >
-                <CircularProgress size={30} />
-              </Box>
-            ) : data ? (
-              <Box
-                sx={{
-                  backgroundColor: "rgba(255,255,255,1)",
-                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                  borderRadius: "4px",
-                  padding: "20px 10px",
-                  height: "800px", // Adjust the height as needed
-                  overflow: "auto", // Add overflow to enable scrolling
-                  maxHeight: "800px", // Add a maximum height to prevent content from overflowing
-                }}
-              >
-                <PerfectScrollbar>
-                  {isActiveTab === "Search Clients" && <SearchClientsPage />}
-                  {isActiveTab === "Associates List" && <AssociatesListPage />}
-                  {isActiveTab === "Add Associate" && <AddAssociatePage />}
-                </PerfectScrollbar>
-              </Box>
-            ) : null}
-          </Grid>
+      {isLoadingSpin ? (
+        <Box
+          display="flex"
+          height="100%"
+          width="100%"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            position: "absolute",
+            zIndex: "10",
+            left: 0,
+            top: "30%",
+          }}
+        >
+          <CircularProgress size={30} />
+        </Box>
+      ) : data ? (
+        <Box
+          sx={{
+            backgroundColor: "rgba(255,255,255,1)",
+            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+            borderRadius: "4px",
+            padding: "20px 10px",
+            height: "1000px",
+            overflow: "auto",
+            maxHeight: "1000px",
+          }}
+        >
+          <PerfectScrollbar>
+            {params.adminAction === "clients" && <SearchClientsPage />}
+            {params.adminAction === "associates_list" && <AssociatesListPage />}
+            {params.adminAction === "add_associate" && <AddAssociatePage />}
+          </PerfectScrollbar>
+        </Box>
+      ) : null}
+      {/* </Grid>
         </Grid>
-      </Container>
+      </Container> */}
     </Box>
   );
 };

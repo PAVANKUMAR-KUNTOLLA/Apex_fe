@@ -292,7 +292,11 @@ const LoginView = () => {
                             );
                             setSubmitting(false);
                             dispatch(setTaxYear(values.taxYear));
-                            navigate("/");
+                            if (res.data?.data?.role === "ADMIN") {
+                              navigate("/app/home/clients");
+                            } else {
+                              navigate("/");
+                            }
                           }
                         })
                         .catch((error) => {

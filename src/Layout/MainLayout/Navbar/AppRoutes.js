@@ -14,6 +14,7 @@ import {
   Paid,
   ExitToApp,
   AccountCircle,
+  PersonAddAltRounded,
 } from "@mui/icons-material";
 
 export const ClientUserRoutes = [
@@ -41,15 +42,26 @@ export const ClientUserRoutes = [
 
 export const AdminUserRoutes = [
   {
-    href: "/app/home",
-    icon: Home,
-    title: "Home",
+    href: "/app/home/clients",
+    icon: People,
+    title: "Clients",
+  },
+  {
+    href: "/app/home/associates_list",
+    icon: ViewList,
+    title: "Associates List",
+  },
+  {
+    href: "/app/home/add_associate",
+    icon: PersonAddAltRounded,
+    title: "Add Associate",
   },
   {
     href: "/app/profile",
     icon: AccountCircle,
     title: "Profile",
   },
+
   //   {
   //     href: "/app/notification",
   //     icon: Notifications,
