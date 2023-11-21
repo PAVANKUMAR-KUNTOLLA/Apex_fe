@@ -4,8 +4,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { Grid, Box, Avatar, Typography } from "@mui/material";
-import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { makeStyles } from "@mui/styles";
 import BankDetails from "./Forms/bankDetails";
@@ -112,6 +110,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
         </AccordionSummary>
         <AccordionDetails>
           <FilerDetails
+            open={expanded === "panel1"}
             id={data["id"]}
             personalDetails={data["personalDetails"]}
             contactDetails={data["contactDetails"]}
@@ -143,6 +142,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
           <IncomeDetails
+            open={expanded === "panel2"}
             id={data["id"]}
             data={data["incomeDetails"]}
             handleFetchData={handleFetchData}
@@ -170,6 +170,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA", paddingLeft: "0px" }}>
           <BankDetails
+            open={expanded === "panel3"}
             id={data["id"]}
             data={data["bankDetails"]}
             handleFetchData={handleFetchData}
@@ -190,7 +191,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
           Upload Tax Docs
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
-          <UploadTaxDocs id={data["id"]} />
+          <UploadTaxDocs open={expanded === "panel4"} id={data["id"]} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -213,6 +214,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
           <ConfirmDetails
+            open={expanded === "panel5"}
             id={data["id"]}
             personalDetails={data["personalDetails"]}
             contactDetails={data["contactDetails"]}
@@ -244,7 +246,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
-          <PickAppointment id={data["id"]} />
+          <PickAppointment open={expanded === "panel6"} id={data["id"]} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -266,7 +268,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
-          <PayPalPayment />
+          <PayPalPayment open={expanded === "panel7"} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -288,7 +290,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
-          <TaxReturns />
+          <TaxReturns open={expanded === "panel8"} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -310,7 +312,7 @@ const BasicAccordion = ({ data, handleFetchData, handleDownloadTemplate }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ bgcolor: "#FAFAFA" }}>
-          <RefundQuote />
+          <RefundQuote open={expanded === "panel9"} />
         </AccordionDetails>
       </Accordion>
     </Box>

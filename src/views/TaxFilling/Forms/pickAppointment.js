@@ -36,7 +36,7 @@ import { StyledTableCell } from "..";
 const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
-    fontWeight: "700",
+    fontWeight: 600,
     lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       // marginBottom: "8px",
@@ -45,7 +45,7 @@ const customTextStyles = makeStyles((theme) => ({
   },
   tableData: {
     fontSize: "16px",
-    fontWeight: "400",
+    fontWeight: 400,
     lineHeight: "23px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -81,7 +81,7 @@ const customTextStyles = makeStyles((theme) => ({
   },
 }));
 
-const PickAppointment = ({ id }) => {
+const PickAppointment = ({ open, id }) => {
   const customStyles = customTextStyles();
   const [isPickAppointmentDetailsLoading, setIsPickAppointmentDetailsLoading] =
     useState(false);
@@ -239,7 +239,7 @@ const PickAppointment = ({ id }) => {
   };
 
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
+    if (sessionStorage.getItem("token") && open) {
       handleFetchAppointmentDetails();
     }
   }, []);
@@ -642,6 +642,14 @@ const PickAppointment = ({ id }) => {
                   ))}
               </TableBody>
             </Table>
+            {appointmentDetails.length === 0 && (
+              <Typography
+                variant="h5"
+                sx={{ textAlign: "center", margin: "10px 0" }}
+              >
+                No Appointments Found
+              </Typography>
+            )}
           </TableContainer>
         )}
       </Box>

@@ -41,16 +41,16 @@ import { StyledTableCell } from "..";
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
-    fontWeight: "400",
-    lineHeight: "23px",
+    fontWeight: 600,
+    lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
   tableData: {
     fontSize: "16px",
-    fontWeight: "700",
-    lineHeight: "22px",
+    fontWeight: 400,
+    lineHeight: "23px",
     [theme.breakpoints.down("sm")]: {
       // marginBottom: "8px",
       display: "none",
@@ -95,7 +95,7 @@ export const customTextStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaxReturns = () => {
+const TaxReturns = ({ open }) => {
   const customStyles = customTextStyles();
   const params = useParams();
   const [showAlert, setShowAlert] = useState({
@@ -279,8 +279,11 @@ const TaxReturns = () => {
   };
 
   useEffect(() => {
-    handleFetchMyTaxDocs();
+    if (open) {
+      handleFetchMyTaxDocs();
+    }
   }, []);
+
   return (
     <Box
       sx={{
@@ -310,11 +313,11 @@ const TaxReturns = () => {
           <Typography
             sx={{
               color: "rgba(71,71,71,1)",
-              fontSize: "24px",
-              fontWeight: 400,
+              fontSize: "21px",
+              fontWeight: 500,
               lineHeight: "33px",
               textAlign: "left",
-              marginBottom: "16px",
+              marginBottom: "32px",
             }}
           >
             Attach Client Tax Returns
@@ -392,11 +395,11 @@ const TaxReturns = () => {
           <Typography
             sx={{
               color: "rgba(71,71,71,1)",
-              fontSize: "24px",
-              fontWeight: 400,
+              fontSize: "21px",
+              fontWeight: 500,
               lineHeight: "33px",
               textAlign: "left",
-              marginBottom: "16px",
+              marginBottom: "32px",
             }}
           >
             Tax Return Document List
@@ -588,7 +591,7 @@ const TaxReturns = () => {
               variant="h5"
               sx={{ textAlign: "center", margin: "10px 0" }}
             >
-              No Records Found
+              No TaxReturns Found
             </Typography>
           )}
         </TableContainer>

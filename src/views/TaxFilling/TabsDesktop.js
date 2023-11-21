@@ -5,26 +5,9 @@ import { Grid, Box, Avatar, Typography, Tabs, Tab } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import PercentIcon from "@mui/icons-material/Percent";
-import Groups from "@mui/icons-material/Groups";
-import ListAlt from "@mui/icons-material/ListAlt";
-import AspectRatioOutlined from "@mui/icons-material/AspectRatioOutlined";
-import UnfoldLess from "@mui/icons-material/UnfoldLess";
-import UnfoldMore from "@mui/icons-material/UnfoldMore";
-import DiscountOutlined from "@mui/icons-material/DiscountOutlined";
-import MonetizationOnOutlined from "@mui/icons-material/MonetizationOnOutlined";
-import InsertPageBreakOutlined from "@mui/icons-material/InsertPageBreakOutlined";
-import DescriptionOutlined from "@mui/icons-material/DescriptionOutlined";
-import StackedBarChartOutlined from "@mui/icons-material/StackedBarChartOutlined";
-import PriceCheckOutlined from "@mui/icons-material/PriceCheckOutlined";
-import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import FilerDeatils from "./Forms/filerDeatils";
 import IncomeDetails from "./Forms/incomeDetails";
 import BankDetails from "./Forms/bankDetails";
-import ConfirmDetails from "./Forms/confirmDetails";
-import PickAppointment from "./Forms/pickAppointment";
-import PayPalPayment from "../Home/payPalPayment";
 import TaxReturns from "./Forms/taxReturns";
 import UploadTaxDocs from "./Forms/TaxDocs";
 
@@ -173,6 +156,7 @@ const TabsDesktop = ({ data, handleFetchData, handleDownloadTemplate }) => {
 
       <CustomTabPanel value={value} index={0}>
         <FilerDeatils
+          open={value === 0}
           id={data["id"]}
           personalDetails={data["personalDetails"]}
           contactDetails={data["contactDetails"]}
@@ -185,6 +169,7 @@ const TabsDesktop = ({ data, handleFetchData, handleDownloadTemplate }) => {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <IncomeDetails
+          open={value === 1}
           id={data["id"]}
           data={data["incomeDetails"]}
           handleFetchData={handleFetchData}
@@ -193,6 +178,7 @@ const TabsDesktop = ({ data, handleFetchData, handleDownloadTemplate }) => {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <BankDetails
+          open={value === 2}
           id={data["id"]}
           data={data["bankDetails"]}
           handleFetchData={handleFetchData}
@@ -202,7 +188,7 @@ const TabsDesktop = ({ data, handleFetchData, handleDownloadTemplate }) => {
         <Grid container>
           <Grid item xs={12}>
             <Box>
-              <UploadTaxDocs id={data["id"]} />
+              <UploadTaxDocs open={value === 3} id={data["id"]} />
             </Box>
           </Grid>
         </Grid>
@@ -211,7 +197,7 @@ const TabsDesktop = ({ data, handleFetchData, handleDownloadTemplate }) => {
         <Grid container>
           <Grid item xs={12}>
             <Box>
-              <TaxReturns id={data["id"]} />
+              <TaxReturns open={value === 4} id={data["id"]} />
             </Box>
           </Grid>
         </Grid>

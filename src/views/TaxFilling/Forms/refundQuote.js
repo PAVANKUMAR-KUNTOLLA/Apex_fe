@@ -1,7 +1,7 @@
 import { Container, Typography, Box, Paper, Grid } from "@mui/material";
 import React from "react";
 
-const RefundQuote = () => {
+const RefundQuote = ({ open }) => {
   return (
     <Box
       sx={{

@@ -34,7 +34,7 @@ import { StyledTableCell } from "..";
 const useStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
-    fontWeight: "700",
+    fontWeight: 600,
     lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableData: {
     fontSize: "16px",
-    fontWeight: "400",
+    fontWeight: 400,
     lineHeight: "23px",
     [theme.breakpoints.down("sm")]: {
       // marginBottom: "8px",
@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ConfirmDetails = ({
+  open,
   id,
   personalDetails,
   contactDetails,
@@ -193,7 +194,9 @@ const ConfirmDetails = ({
       <Grid container spacing={2}>
         <Grid item lg={6} sm={6} xs={12}>
           <Box className={customStyles.leftSide}>
-            <Typography variant="h5">Personal Details</Typography>
+            <Typography variant="h4" sx={{ marginBottom: "36px" }}>
+              Personal Details
+            </Typography>
 
             <Box
               sx={{
@@ -633,7 +636,7 @@ const ConfirmDetails = ({
         <Grid container spacing={2}>
           {/* Left Side - Spouse Details */}
           <Grid item lg={6} sm={6} xs={12}>
-            <Typography variant="h5" mb={2}>
+            <Typography variant="h4" mb={2}>
               Spouse Details
             </Typography>
             <Grid container spacing={2}>
@@ -700,7 +703,7 @@ const ConfirmDetails = ({
 
           {/* Right Side - Spouse Contact */}
           <Grid item lg={6} sm={6} xs={12}>
-            <Typography variant="h5" mb={2}>
+            <Typography variant="h4" mb={2}>
               Spouse Contact
             </Typography>
             <Grid container spacing={2}>
@@ -840,11 +843,11 @@ const ConfirmDetails = ({
           <Typography
             sx={{
               color: "rgba(71,71,71,1)",
-              fontSize: "24px",
-              fontWeight: 400,
+              fontSize: "21px",
+              fontWeight: 500,
               lineHeight: "33px",
               textAlign: "center",
-              marginBottom: "16px",
+              marginBottom: "32px",
             }}
           >
             Dependant Details
@@ -1029,7 +1032,7 @@ const ConfirmDetails = ({
               variant="h5"
               sx={{ textAlign: "center", margin: "10px 0" }}
             >
-              No Records Found
+              No Dependants Found
             </Typography>
           )}
         </TableContainer>

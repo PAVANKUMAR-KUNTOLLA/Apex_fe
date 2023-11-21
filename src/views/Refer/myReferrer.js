@@ -67,11 +67,11 @@ const MyReferrer = () => {
       <Typography
         sx={{
           color: "rgba(71,71,71,1)",
-          fontSize: "24px",
-          fontWeight: 400,
+          fontSize: "21px",
+          fontWeight: 500,
           lineHeight: "33px",
           textAlign: "left",
-          marginBottom: "16px",
+          marginBottom: "32px",
         }}
       >
         Referal Details

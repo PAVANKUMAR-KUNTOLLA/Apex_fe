@@ -11,6 +11,7 @@ import {
   TableCell,
 } from "@mui/material";
 import { customTextStyles } from "../../UsersDisplay";
+import { capitalizeString } from "../../../../../../utils";
 
 const SummaryRefundPage = ({ data, isLoadingSpin, handlePageChange }) => {
   const customStyles = customTextStyles();
@@ -70,7 +71,7 @@ const SummaryRefundPage = ({ data, isLoadingSpin, handlePageChange }) => {
                     {row.id}
                   </TableCell>
                   <TableCell className={customStyles.tableData}>
-                    {row.refund_type}
+                    {capitalizeString(row.refund_type)}
                   </TableCell>
                   <TableCell className={customStyles.tableData}>
                     {row.standard_refund}

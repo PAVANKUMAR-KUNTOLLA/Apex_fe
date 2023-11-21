@@ -33,6 +33,7 @@ import config from "../../../config";
 import { makeStyles } from "@mui/styles";
 import taxServicesData from "../../../mock-adapter/taxServicesData.json";
 import DrawerAppBar from "../../../Layout/MainLayout/appBarMaterialUI";
+import CustomAlert from "../../../components/CustomAlert";
 
 import Api from "../../../components/Api";
 import {
@@ -121,6 +122,12 @@ const ClientHomePage = () => {
   const [isMyServicesLoading, setIsMyServicesLoading] = useState(false);
   const [isTaxYearsLoading, setIsTaxYearsLoading] = useState(false);
   const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = useState({
+    isAlert: false,
+    alertTitle: "",
+    alertText: "",
+    severity: "",
+  });
 
   const handleNavigate = (value) => {
     let path = value;
@@ -137,11 +144,22 @@ const ClientHomePage = () => {
           console.log("data", data);
           setMyServices(data?.data);
           setIsMyServicesLoading(false);
+          setShowAlert({
+            isAlert: true,
+            severity: "success",
+            alertText: data?.["message"],
+          });
         }
       })
       .catch((error) => {
         console.log("Error", error);
         setIsMyServicesLoading(false);
+        const { data } = error.response;
+        setShowAlert({
+          isAlert: true,
+          severity: "error",
+          alertText: data?.["message"],
+        });
       });
   };
 
@@ -186,6 +204,22 @@ const ClientHomePage = () => {
 
   return (
     <Box>
+      {showAlert.isAlert && (
+        <CustomAlert
+          open={showAlert.isAlert}
+          severity={showAlert.severity}
+          alertTitle={showAlert.alertTitle}
+          alertText={showAlert.alertText}
+          onClose={() =>
+            setShowAlert({
+              isAlert: false,
+              alertTitle: "",
+              alertText: "",
+              severity: "",
+            })
+          }
+        />
+      )}
       <Box
         sx={{
           marginTop: "25px",

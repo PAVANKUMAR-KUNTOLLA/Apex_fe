@@ -73,7 +73,7 @@ const validationSchema = Yup.object().shape({
   }),
 });
 
-const BankDetails = ({ id, data, handleFetchData }) => {
+const BankDetails = ({ open, id, data, handleFetchData }) => {
   const [isBankDetailsLoading, setIsBankDetailsLoading] = useState(false);
 
   const initialValues = {

@@ -35,7 +35,7 @@ import { StyledTableCell } from "..";
 const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
-    fontWeight: "700",
+    fontWeight: 600,
     lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       // marginBottom: "8px",
@@ -44,7 +44,7 @@ const customTextStyles = makeStyles((theme) => ({
   },
   tableData: {
     fontSize: "16px",
-    fontWeight: "400",
+    fontWeight: 400,
     lineHeight: "23px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -100,6 +100,7 @@ export function CustomLabel({ label, required }) {
 }
 
 const FilerDetails = ({
+  open,
   id,
   personalDetails,
   contactDetails,
@@ -228,7 +229,9 @@ const FilerDetails = ({
   };
 
   useEffect(() => {
-    handleFetchDependantDetails();
+    if (open) {
+      handleFetchDependantDetails();
+    }
   }, []);
 
   return (
@@ -459,7 +462,7 @@ const FilerDetails = ({
 
                   <Grid item lg={6} sm={6} xs={12}>
                     <Box className={customStyles.leftSide}>
-                      <Typography variant="h4" sx={{ marginBottom: "16px" }}>
+                      <Typography variant="h4" sx={{ marginBottom: "36px" }}>
                         Personal Details
                       </Typography>
 
@@ -1096,7 +1099,7 @@ const FilerDetails = ({
                   <Grid container spacing={2}>
                     {/* Left Side - Spouse Details */}
                     <Grid item lg={6} sm={6} xs={12}>
-                      <Typography variant="h5">Spouse Details</Typography>
+                      <Typography variant="h4">Spouse Details</Typography>
                       <Grid container spacing={2}>
                         <CustomInputTextField
                           attribute="First Name"
@@ -1223,7 +1226,7 @@ const FilerDetails = ({
                               handleDownloadTemplate("ITIN_Information.xls")
                             }
                             sx={{
-                              marginTop: "2px",
+                              marginTop: "12px",
                               textDecoration: "underline",
                             }}
                             disableTouchRipple
@@ -1236,7 +1239,7 @@ const FilerDetails = ({
 
                     {/* Right Side - Spouse Contact */}
                     <Grid item lg={6} sm={6} xs={12}>
-                      <Typography variant="h5">Spouse Contact</Typography>
+                      <Typography variant="h4">Spouse Contact</Typography>
                       <Grid container spacing={2}>
                         <CustomInputTextField
                           attribute="Date of Birth"
@@ -1473,7 +1476,7 @@ const FilerDetails = ({
                     <Grid container spacing={2}>
                       {/* Left Side - additional Details */}
                       <Grid item lg={6} sm={6} xs={12}>
-                        <Typography variant="h5">Additional Details</Typography>
+                        <Typography variant="h4">Additional Details</Typography>
                         <Grid container spacing={2}>
                           <CustomInputTextField
                             attribute="First Name"
@@ -1642,7 +1645,7 @@ const FilerDetails = ({
 
                       {/* Right Side - additional Contact */}
                       <Grid item lg={6} sm={6} xs={12}>
-                        <Typography variant="h5">Additional Contact</Typography>
+                        <Typography variant="h4">Additional Contact</Typography>
                         <Grid container spacing={2}>
                           <CustomInputTextField
                             attribute="Dependent DOB"
@@ -1842,11 +1845,11 @@ const FilerDetails = ({
                         <Typography
                           sx={{
                             color: "rgba(71,71,71,1)",
-                            fontSize: "24px",
-                            fontWeight: 400,
+                            fontSize: "21px",
+                            fontWeight: 500,
                             lineHeight: "33px",
                             textAlign: "center",
-                            marginBottom: "16px",
+                            marginBottom: "32px",
                           }}
                         >
                           Existing Dependant Details
@@ -2110,7 +2113,7 @@ const FilerDetails = ({
                               variant="h5"
                               sx={{ textAlign: "center", margin: "10px 0" }}
                             >
-                              No Records Found
+                              No Dependants Found
                             </Typography>
                           )}
                         <Typography

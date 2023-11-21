@@ -33,7 +33,7 @@ import { StyledTableCell } from "..";
 export const customTextStyles = makeStyles((theme) => ({
   tableHeader: {
     fontSize: "16px",
-    fontWeight: "700",
+    fontWeight: 600,
     lineHeight: "22px",
     [theme.breakpoints.down("sm")]: {
       // marginBottom: "8px",
@@ -42,7 +42,7 @@ export const customTextStyles = makeStyles((theme) => ({
   },
   tableData: {
     fontSize: "16px",
-    fontWeight: "400",
+    fontWeight: 400,
     lineHeight: "23px",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -116,7 +116,7 @@ export const customTextStyles = makeStyles((theme) => ({
   },
 }));
 
-const UploadTaxDocs = ({ id }) => {
+const UploadTaxDocs = ({ open, id }) => {
   const customStyles = customTextStyles();
   const [showAlert, setShowAlert] = useState({
     isAlert: false,
@@ -293,7 +293,9 @@ const UploadTaxDocs = ({ id }) => {
   };
 
   useEffect(() => {
-    handleFetchMyTaxDocs();
+    if (open) {
+      handleFetchMyTaxDocs();
+    }
   }, []);
 
   return (
@@ -617,7 +619,7 @@ const UploadTaxDocs = ({ id }) => {
                 variant="h5"
                 sx={{ textAlign: "center", margin: "10px 0" }}
               >
-                No Records Found
+                No TaxDocs Found
               </Typography>
             )}
           </TableContainer>

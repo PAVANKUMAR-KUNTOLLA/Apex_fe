@@ -22,6 +22,7 @@ import { privateApiPOST } from "../../../components/PrivateRoute";
 import CustomInputTextField from "../../../components/CustomInputField";
 
 const IncomeDetails = ({
+  open,
   id,
   data,
   handleFetchData,
