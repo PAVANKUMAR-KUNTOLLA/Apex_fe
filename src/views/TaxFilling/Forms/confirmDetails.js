@@ -695,19 +695,6 @@ const ConfirmDetails = ({
                 <MenuItem value={false}>No</MenuItem>
                 <MenuItem value={true}>Yes</MenuItem>
               </CustomInputTextField>
-
-              {formData.spouseApplyForItin === true && (
-                <ButtonBase
-                  onClick={() => handleDownloadTemplate("ITIN_Information.xls")}
-                  sx={{
-                    marginTop: "2px",
-                    textDecoration: "underline",
-                  }}
-                  disableTouchRipple
-                >
-                  Download ITIN Information Excel
-                </ButtonBase>
-              )}
             </Grid>
           </Grid>
 

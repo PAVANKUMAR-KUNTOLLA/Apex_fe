@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import DrawerAppBar from "./appBarMaterialUI";
@@ -45,6 +45,7 @@ const AppLayout = () => {
   const { initialAppLoading } = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isLoadingSpin, setIsLoadingSpin] = useState(true);
 
   const handleFetchProfileData = () => {
@@ -56,6 +57,12 @@ const AppLayout = () => {
           console.log("data", data);
           dispatch(setUserInfo(data?.data));
           setIsLoadingSpin(false);
+          if (
+            data?.data?.role === "ADMIN" &&
+            location.pathname.startsWith("/app/home")
+          ) {
+            navigate("/app/home/clients");
+          }
         }
       })
       .catch((error) => {

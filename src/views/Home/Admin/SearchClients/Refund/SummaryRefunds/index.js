@@ -40,19 +40,16 @@ const SummaryRefundPage = ({ data, isLoadingSpin, handlePageChange }) => {
           <TableHead>
             <TableRow sx={{ backgroundColor: "#CCEEEE" }}>
               <TableCell className={customStyles.tableHeader}>
+                Refund Id
+              </TableCell>
+              <TableCell className={customStyles.tableHeader}>
                 Refund Type
               </TableCell>
               <TableCell className={customStyles.tableHeader}>
                 Standard Refund
               </TableCell>
               <TableCell className={customStyles.tableHeader}>
-                Standard Fee
-              </TableCell>
-              <TableCell className={customStyles.tableHeader}>
                 Itemized Refund
-              </TableCell>
-              <TableCell className={customStyles.tableHeader}>
-                Itemized Fee
               </TableCell>
               <TableCell className={customStyles.tableHeader}>
                 Discount
@@ -61,10 +58,7 @@ const SummaryRefundPage = ({ data, isLoadingSpin, handlePageChange }) => {
                 Paid Advance
               </TableCell>
               <TableCell className={customStyles.tableHeader}>
-                Max Itemized Refund
-              </TableCell>
-              <TableCell className={customStyles.tableHeader}>
-                Max Itemized Fee
+                Remarks
               </TableCell>
             </TableRow>
           </TableHead>
@@ -73,19 +67,16 @@ const SummaryRefundPage = ({ data, isLoadingSpin, handlePageChange }) => {
               data.map((row, id) => (
                 <TableRow key={id}>
                   <TableCell className={customStyles.tableData}>
+                    {row.id}
+                  </TableCell>
+                  <TableCell className={customStyles.tableData}>
                     {row.refund_type}
                   </TableCell>
                   <TableCell className={customStyles.tableData}>
                     {row.standard_refund}
                   </TableCell>
                   <TableCell className={customStyles.tableData}>
-                    {row.standard_fee}
-                  </TableCell>
-                  <TableCell className={customStyles.tableData}>
                     {row.itemized_refund}
-                  </TableCell>
-                  <TableCell className={customStyles.tableData}>
-                    {row.itemized_fee}
                   </TableCell>
                   <TableCell className={customStyles.tableData}>
                     {row.discount}
@@ -93,12 +84,7 @@ const SummaryRefundPage = ({ data, isLoadingSpin, handlePageChange }) => {
                   <TableCell className={customStyles.tableData}>
                     {row.paid_advance}
                   </TableCell>
-                  <TableCell className={customStyles.tableData}>
-                    {row.max_itemized_refund}
-                  </TableCell>
-                  <TableCell className={customStyles.tableData}>
-                    {row.max_itemized_fee}
-                  </TableCell>
+                  <TableCell className={customStyles.tableData}></TableCell>
                 </TableRow>
               ))}
           </TableBody>
